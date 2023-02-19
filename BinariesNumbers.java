@@ -1,30 +1,37 @@
 
 public class BinariesNumbers {
 
-  public void getBinNum(){
-      int carry = 0b0000;
-      int x = 0b0000;
-      int y = 0b0001;
-      int sum = 0b0000;
-      int res = 0b0000;
+    public static void printBin(int binNum){
+        System.out.println(Integer.toBinaryString(binNum));
+    }
 
-      int cnt = 0;
+    public static int doBinNum() {
+        int a = 0b0;
+        int b = 0b1;
+        int carry = 0;
+        int sumFinal = 0;
+        int sumAux = 0;
 
-      while (cnt < 5){
-              while (y != 0) {
-                  sum = x ^ y; // 1 0 10 0
-                  carry = x & y << 1; // 0 10 0 100
-                  res = sum | carry; // 1 10 10 100
 
-                  System.out.println(Integer.toBinaryString(res));
+        for (int j = 0; j < 16; j++) {
+            for (int i = 0; i < 5; i++) {
+                int bitA = (a >> i) & 1;
+                int bitB = (b >> i) & 1;
+                sumAux = bitA ^ bitB ^ carry;
+                carry = (bitA & bitB) | (bitB & carry) | (carry & bitA);
+                sumFinal |= (sumAux << i);
+            }
+            BinariesNumbers.printBin(sumFinal);
+            a = sumFinal;
+            sumFinal = 0;
+        }
+        return sumFinal;
+    }
 
-                  x = res; // 1 10 10
-                  y = sum; // 1 0 10
-              }
-          cnt++;
-      }
-  }
-  public String doBinNum(String num){ //do a check if the digits are only 0 or 1
+
+
+
+    public String doBinNum(String num){ //do a check if the digits are only 0 or 1
       String numStr = num+"";
        long binNum = 0L;
 
