@@ -27,22 +27,30 @@ public class BinariesNumbers {
         }
         return sumFinal;
     }
+    public static String changeBinToDec(String num){
 
-
-
-
-    public String doBinNum(String num){ //do a check if the digits are only 0 or 1
-      String numStr = num+"";
        long binNum = 0L;
 
-       if(numStr.length() <= 1){
-           return num+"";
+       if(num.length() <= 1){
+           return num;
        }else{
-           binNum = (long)(Math.pow(2, numStr.length()) - 1);
+           int startPoint = num.charAt(0);
+           int middlePoint = num.charAt(num.length()/2);
+           int endPoint = num.charAt(num.length() - 1);
+           int checkerSum = startPoint + middlePoint + endPoint;
 
-           for (int i = numStr.length() -1 ; i > 0; i--) {
-               if(numStr.charAt(i) == '0'){
-                   binNum = (long) (binNum - Math.pow(2, numStr.length() -1 - i));
+           if(checkerSum < 144 || checkerSum > 153){
+               return "INVALID BINARY NUMBER\n";
+           } else {
+               for (int i = 0; i < num.length(); i++) {
+                   if (num.charAt(i) != '0' && num.charAt(i) != '1'){
+                       return "INVALID BINARY NUMBER\n";
+                   }else {
+                       binNum = (long)(Math.pow(2, num.length()) - 1);
+                       if(num.charAt(i) == '0'){
+                           binNum = (long) (binNum - Math.pow(2, num.length() -1 - i));
+                       }
+                   }
                }
            }
        }
